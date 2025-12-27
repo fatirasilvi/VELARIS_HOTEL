@@ -3,7 +3,6 @@ session_start();
 
 /**
  * AMANKAN PARAMETER GET
- * Supaya tidak Undefined array key
  */
 $checkin  = $_GET['checkin']  ?? '';
 $checkout = $_GET['checkout'] ?? '';
@@ -32,7 +31,7 @@ $checkout = $_GET['checkout'] ?? '';
                 👤 <?= htmlspecialchars($_SESSION['customer_name']); ?>
             </div>
         <?php else: ?>
-            <a href="login.php" class="login-btn">Login</a>
+            <a href="auth/login.php" class="login-btn">Login</a>
         <?php endif; ?>
     </div>
 </header>
@@ -47,12 +46,12 @@ $checkout = $_GET['checkout'] ?? '';
     <form method="GET">
         <div class="field">
             <label>Check in</label>
-            <input type="date" name="checkin" value="<?= $checkin; ?>" required>
+            <input type="date" name="checkin" value="<?= htmlspecialchars($checkin); ?>" required>
         </div>
 
         <div class="field">
             <label>Check out</label>
-            <input type="date" name="checkout" value="<?= $checkout; ?>" required>
+            <input type="date" name="checkout" value="<?= htmlspecialchars($checkout); ?>" required>
         </div>
 
         <button type="submit" class="search-btn">Search</button>
@@ -62,7 +61,7 @@ $checkout = $_GET['checkout'] ?? '';
 <!-- ================= ROOM LIST ================= -->
 <section class="rooms">
 
-    <!-- ROOM 1 -->
+    <!-- ================= ROOM 1 ================= -->
     <div class="room-card">
         <img src="assets/img/room1.jpg" alt="Executive Suite">
 
@@ -82,18 +81,22 @@ $checkout = $_GET['checkout'] ?? '';
             <p class="price">IDR 1.500.000</p>
 
             <?php if ($checkin && $checkout): ?>
-                <a href="reservasi.php?id_kamar=1&checkin=<?= $checkin; ?>&checkout=<?= $checkout; ?>" class="btn">
-                    Select
-                </a>
+
+                <?php if (!isset($_SESSION['customer_id'])): ?>
+                    <a href="auth/login.php" class="btn">Select</a>
+                <?php else: ?>
+                    <a href="reservasi.php?id_kamar=1&checkin=<?= $checkin; ?>&checkout=<?= $checkout; ?>" class="btn">
+                        Select
+                    </a>
+                <?php endif; ?>
+
             <?php else: ?>
-                <button class="btn disabled" disabled>
-                    Select
-                </button>
+                <button class="btn disabled" disabled>Select</button>
             <?php endif; ?>
         </div>
     </div>
 
-    <!-- ROOM 2 -->
+    <!-- ================= ROOM 2 ================= -->
     <div class="room-card">
         <img src="assets/img/room2.jpg" alt="Family Suite">
 
@@ -113,18 +116,22 @@ $checkout = $_GET['checkout'] ?? '';
             <p class="price">IDR 1.400.000</p>
 
             <?php if ($checkin && $checkout): ?>
-                <a href="reservasi.php?id_kamar=2&checkin=<?= $checkin; ?>&checkout=<?= $checkout; ?>" class="btn">
-                    Select
-                </a>
+
+                <?php if (!isset($_SESSION['customer_id'])): ?>
+                    <a href="auth/login.php" class="btn">Select</a>
+                <?php else: ?>
+                    <a href="reservasi.php?id_kamar=2&checkin=<?= $checkin; ?>&checkout=<?= $checkout; ?>" class="btn">
+                        Select
+                    </a>
+                <?php endif; ?>
+
             <?php else: ?>
-                <button class="btn disabled" disabled>
-                    Select
-                </button>
+                <button class="btn disabled" disabled>Select</button>
             <?php endif; ?>
         </div>
     </div>
 
-    <!-- ROOM 3 -->
+    <!-- ================= ROOM 3 ================= -->
     <div class="room-card">
         <img src="assets/img/room3.jpg" alt="Suite Room">
 
